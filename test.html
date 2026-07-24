@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+
+   <style>
+      * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+      }
+
+      .container {
+         width: 50%;
+         margin: 0 auto;
+         margin-top: 50px;
+      }
+
+      /* --------- Time & Date  ----------------- */
+      .localTime {
+         width: 260px;
+         padding: 20px;
+         background: #ffffff;
+         border-radius: 16px;
+         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+         border: 1px solid #f0f0f0;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+         font-family: system-ui, -apple-system, sans-serif;
+      }
+
+      #presentTime {
+         width: 100%;
+         padding: 12px 0;
+         color: #1e293b;
+         background: #f8fafc;
+         border: 1px solid #e2e8f0;
+         border-radius: 12px;
+         text-align: center;
+         font-size: 28px;
+         font-weight: 700;
+         letter-spacing: 0.5px;
+         box-sizing: border-box;
+      }
+
+      #presenDate {
+         width: 100%;
+         padding: 8px 0;
+         color: #64748b;
+         background: transparent;
+         border: none;
+         text-align: center;
+         font-size: 16px;
+         font-weight: 500;
+         margin-top: 8px;
+         box-sizing: border-box;
+      }
+
+      /* --------- END ----------------- */
+
+
+
+
+      /* --------- form vlaidation ----------------- */
+
+
+      /* Card Container */
+      .form-card {
+         max-width: 360px;
+         padding: 24px;
+         background: #ffffff;
+         border-radius: 12px;
+         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+         border: 1px solid #e2e8f0;
+         font-family: system-ui, -apple-system, sans-serif;
+      }
+
+      /* Form Grouping & Inputs */
+      .form-group {
+         margin-bottom: 16px;
+      }
+
+      .form-group label {
+         display: block;
+         font-size: 14px;
+         font-weight: 600;
+         color: #334155;
+         margin-bottom: 6px;
+      }
+
+      .form-group input {
+         width: 100%;
+         padding: 10px 12px;
+         font-size: 14px;
+         border: 1px solid #cbd5e1;
+         border-radius: 6px;
+         outline: none;
+         box-sizing: border-box;
+         transition: border-color 0.2s, box-shadow 0.2s;
+      }
+
+      /* Input Focus State */
+      .form-group input:focus {
+         border-color: #2563eb;
+         box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      }
+
+      /* Buttons */
+      .button-group {
+         display: flex;
+         gap: 10px;
+         margin-top: 20px;
+      }
+
+      .btn {
+         flex: 1;
+         padding: 10px;
+         font-size: 14px;
+         font-weight: 600;
+         border-radius: 6px;
+         border: none;
+         cursor: pointer;
+         transition: background 0.2s;
+      }
+
+      .btn-primary {
+         background: #2563eb;
+         color: #ffffff;
+      }
+
+      .btn-primary:hover {
+         background: #1d4ed8;
+      }
+
+      .btn-secondary {
+         background: #f1f5f9;
+         color: #475569;
+      }
+
+      .btn-secondary:hover {
+         background: #e2e8f0;
+      }
+
+      #validationError {
+         display: none;
+      }
+
+      /* --------- END ----------------- */
+   </style>
+</head>
+
+
+<body>
+   <div class="container">
+      <div>
+         <h2>Time Countdown & Date using setInterval & SetTimeout </h2>
+         <div class="localTime">
+            <p id="presentTime"></p>
+            <p id="presenDate"></p>
+
+         </div>
+      </div>
+
+      <div style="margin-top: 10px;">
+         <h2>Form Vlidation</h2>
+
+         <form class="form-card " id="apendChild" onsubmit="formValidation(event)">
+            <p id="validationError"></p>
+            <div class="form-group">
+               <label for="username">Username</label>
+               <input type="text" placeholder="Enter your username" id="username">
+            </div>
+
+            <div class="form-group">
+               <label for="email">Email</label>
+               <input type="email" placeholder="Enter your email" id="email">
+            </div>
+
+            <div class="form-group">
+               <label for="phone">Phone Number</label>
+               <input type="tel" placeholder="Enter your phone number" id="phone">
+            </div>
+
+            <div class="button-group">
+               <button type="submit" class="btn btn-primary">Submit</button>
+               <button type="reset" class="btn btn-secondary">Reset</button>
+            </div>
+         </form>
+      </div>
+   </div>
+   <script>
+
+      //------------------------Form validation ---------------------------
+      function formValidation(e) {
+         e.preventDefault();
+
+         var validationError = document.getElementById("validationError")
+
+         var username = document.getElementById("username").value.trim()
+         var email = document.getElementById("email").value.trim()
+         var phone = document.getElementById("phone").value.trim()
+
+         if (username.length < 3 || username.length > 15) {
+            validationError.innerText = "Username must be between 3 and 15 characters."
+            validationError.style = "display:block"
+         }
+         else if ((!email.includes("@"))) {
+            validationError.innerText = "Please enter the  valid email with @ "
+            validationError.style = "display:block"
+         }
+         else if ((phone.length !== 11)) {
+            validationError.innerText = "Please enter the 11 digit valid phone number "
+            validationError.style = "display:block"
+         }
+         else {
+
+            validationError.style.display = "none";
+            alert("Form submitted successfully!");
+            e.target.reset();
+         }
+
+
+      }
+
+
+
+      // function formValidation(e) {
+      //    e.preventDefault();
+
+      //    var validationError = document.getElementById("validationError");
+
+      //    var username = document.getElementById("username").value.trim();
+      //    var email = document.getElementById("email").value.trim();
+      //    var phone = document.getElementById("phone").value.trim();
+
+      //    // 1. REGEX PATTERNS
+      //    // Username: 3-15 chars, letters, numbers, and underscores only
+      //    var usernameRegex = /^[a-zA-Z0-9_]{3,15}$/;
+
+      //    // Email: Standard email format (text@text.domain)
+      //    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      //    // Phone: Exactly 11 digits
+      //    var phoneRegex = /^[0-9]{11}$/;
+
+      //    // 2. VALIDATION CHECKS
+      //    if (!usernameRegex.test(username)) {
+      //       validationError.innerText = "Username must be 3-15 alphanumeric characters or underscores.";
+      //       validationError.style.display = "block";
+      //    }
+      //    else if (!emailRegex.test(email)) {
+      //       validationError.innerText = "Please enter a valid email address (e.g. name@domain.com).";
+      //       validationError.style.display = "block";
+      //    }
+      //    else if (!phoneRegex.test(phone)) {
+      //       validationError.innerText = "Please enter a valid 11-digit phone number.";
+      //       validationError.style.display = "block";
+      //    }
+      //    else {
+      //       // 3. SUCCESS & FORM RESET
+      //       validationError.style.display = "none";
+      //       alert("Form submitted successfully!");
+      //       e.target.reset(); // Clears all input fields
+      //    }
+      // }
+      //---------------------------------END---------------------------------
+
+
+      //------------------------time & date ---------------------------
+      function LocalTime() {
+         var presentTime = document.getElementById("presentTime")
+         var presenDate = document.getElementById("presenDate")
+
+         presentTime.innerText = new Date().toLocaleTimeString()
+         // presenDate.innerText = new Date().toDateString()
+         presenDate.style = "display:none"
+
+         setInterval(() => {
+            var localTime = new Date().toLocaleTimeString()
+            presentTime.innerText = localTime
+         }, 1000)
+
+         setTimeout(() => {
+            presenDate.style = "display:block; color:black"
+            presenDate.innerText = new Date().toDateString()
+         }, 1000)
+
+
+      }
+      LocalTime();
+
+      //---------------------------------END---------------------------------
+
+
+
+
+
+
+   </script>
+
+
+</body>
+
+</html>
